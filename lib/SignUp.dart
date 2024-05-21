@@ -31,7 +31,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text);
-      if (userCredential != null) {
+      if (userCredential.user != null) {
         hideProgressDialog(context);
         Snackbars.success(context, 'Registered Successfully');
         Navigator.popUntil(context, (route) => route.isFirst);
