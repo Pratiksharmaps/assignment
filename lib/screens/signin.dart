@@ -1,8 +1,9 @@
-import 'package:assignment/Forget_password_screeen.dart';
-import 'package:assignment/HomeScreen.dart';
-import 'package:assignment/SignUp.dart';
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
+import 'package:assignment/screens/Forget_password_screeen.dart';
+import 'package:assignment/screens/HomeScreen.dart';
+import 'package:assignment/screens/SignUp.dart';
+import 'package:assignment/screens/task_screen.dart';
 import 'package:assignment/utils/progress_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,7 +31,7 @@ class _signInState extends State<signIn> {
           email: _emailController.text, password: _passwordController.text);
       Snackbars.success(context, 'Login Successfully');
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const TaskScreen()));
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
@@ -78,7 +79,7 @@ class _signInState extends State<signIn> {
           Snackbars.success(context, 'Registered Successfully');
           Navigator.popUntil(context, (route) => route.isFirst);
           Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: ((context) => const HomeScreen())));
+              MaterialPageRoute(builder: ((context) => const TaskScreen())));
         }
       }
     } catch (ex) {

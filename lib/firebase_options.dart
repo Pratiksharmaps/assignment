@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDmOT-xGX8o_8OyCp44otZbTrnn1E9Zgfs',
-    appId: '1:254528540069:android:309dac922a7ddd1dd52c4c',
-    messagingSenderId: '254528540069',
-    projectId: 'assign-e1f7c',
-    storageBucket: 'assign-e1f7c.appspot.com',
+    apiKey: 'AIzaSyA6iViMv6nJWFC2qLcx46i06-h_AUP7l1w',
+    appId: '1:48032701781:android:e1299a2dc436bb345123dc',
+    messagingSenderId: '48032701781',
+    projectId: 'taskmanager-28f8e',
+    storageBucket: 'taskmanager-28f8e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyC-bDuJpfKauqxvjnkPG4oitMvX9RbYYOk',
-    appId: '1:254528540069:ios:bf47d1b0709717afd52c4c',
-    messagingSenderId: '254528540069',
-    projectId: 'assign-e1f7c',
-    storageBucket: 'assign-e1f7c.appspot.com',
+    apiKey: 'AIzaSyCWBYRB--9DZyKHq8wS2MWeUzZm_sOGWIY',
+    appId: '1:48032701781:ios:6a5246ef2693d7d85123dc',
+    messagingSenderId: '48032701781',
+    projectId: 'taskmanager-28f8e',
+    storageBucket: 'taskmanager-28f8e.appspot.com',
     iosBundleId: 'com.example.assignment',
   );
 

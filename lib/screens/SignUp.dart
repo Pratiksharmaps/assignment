@@ -1,7 +1,8 @@
-import 'package:assignment/HomeScreen.dart';
+
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
-import 'package:assignment/signin.dart';
+import 'package:assignment/screens/HomeScreen.dart';
+import 'package:assignment/screens/signin.dart';
 import 'package:assignment/utils/progress_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +14,6 @@ class SignUpScreen extends StatefulWidget {
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
-
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
@@ -75,7 +75,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                const Column(children: [
+                const Column(
+                  children: [
                   SizedBox(
                     width: 30,
                   ),
@@ -85,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(255, 180, 4, 1.0),
+                      color: Colors.blue,
                     ),
                   ),
                   Text(
@@ -277,7 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               builder: ((context) => const signIn()))),
                       child: const Text("Login",
                           style: TextStyle(
-                            color: Color.fromRGBO(255, 180, 4, 1.0),
+                            color: Colors.blue,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           )),

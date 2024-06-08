@@ -1,6 +1,6 @@
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
-import 'package:assignment/signin.dart';
+import 'package:assignment/screens/signin.dart';
 import 'package:assignment/utils/alert_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
