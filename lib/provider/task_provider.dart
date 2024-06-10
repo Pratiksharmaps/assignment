@@ -8,7 +8,6 @@ class Task {
   DateTime deadline;
   int duration;
   bool isComplete;
-
   Task({
     required this.id,
     required this.title,
@@ -17,7 +16,6 @@ class Task {
     required this.duration,
     required this.isComplete,
   });
-
   factory Task.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map;
     return Task(
@@ -29,9 +27,10 @@ class Task {
       isComplete: data['isComplete'] ?? false,
     );
   }
-
-  Map<String, dynamic> toMap() {
+//
+  Map<String, dynamic> taskMap() {
     return {
+      'id': id,
       'title': title,
       'description': description,
       'deadline': deadline,
@@ -45,24 +44,39 @@ class TaskService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Stream<List<Task>> getTasks(String userId) {
-    return _db.collection('tasks')
-        .where('userId', isEqualTo: userId)
+    return _db
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
         .snapshots()
-        .map((snapshot) => snapshot.docs
-        .map((doc) => Task.fromFirestore(doc))
-        .toList());
+        .map((snapshot) =>
+            snapshot.docs.map((doc) => Task.fromFirestore(doc)).toList());
   }
 
-  Future<void> addTask(Task task) {
-    return _db.collection('tasks').add(task.toMap());
+  Future<void> addTask(Task task, String userId) {
+    return _db
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .add(task.taskMap());
   }
 
-  Future<void> updateTask(Task task) {
-    return _db.collection('tasks').doc(task.id).update(task.toMap());
+  Future<void> updateTask(Task task, String userId) {
+    return _db
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .doc(task.id)
+        .update(task.taskMap());
   }
 
-  Future<void> deleteTask(String taskId) {
-    return _db.collection('tasks').doc(taskId).delete();
+  Future<void> deleteTask(String taskId,String userId) {
+    return _db
+        .collection('users')
+        .doc(userId)
+        .collection('tasks')
+        .doc(taskId)
+        .delete();
   }
 }
 
@@ -70,6 +84,7 @@ final taskServiceProvider = Provider<TaskService>((ref) {
   return TaskService();
 });
 
-final taskListProvider = StreamProvider.family<List<Task>, String>((ref, userId) {
+final taskListProvider =
+    StreamProvider.family<List<Task>, String>((ref, userId) {
   return ref.watch(taskServiceProvider).getTasks(userId);
 });

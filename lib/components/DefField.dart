@@ -1,3 +1,4 @@
+import 'package:assignment/components/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,9 +37,7 @@ class DefField extends StatelessWidget {
         obscureText: obsecure,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(7),
-            focusColor: const Color.fromRGBO(255, 180, 4, 1.0),
-            // focusedBorder: const OutlineInputBorder(
-            // ),
+            focusColor: primaryColor,
             suffixIcon: IconButton(
               onPressed: iconFunction ?? () {},
               style: const ButtonStyle(),

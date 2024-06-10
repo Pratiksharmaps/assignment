@@ -1,7 +1,7 @@
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
+import 'package:assignment/components/colors.dart';
 import 'package:assignment/screens/Forget_password_screeen.dart';
-import 'package:assignment/screens/HomeScreen.dart';
 import 'package:assignment/screens/SignUp.dart';
 import 'package:assignment/screens/task_screen.dart';
 import 'package:assignment/utils/progress_dialog.dart';
@@ -103,22 +103,13 @@ class _signInState extends State<signIn> {
                     height: 18,
                   ),
                   //-------------------Page Heading-------------------------------------
-                  Text("Welcome to ",
+                  Text("Welcome Back! ",
                       style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 25,
                         decorationThickness: 8,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(255, 180, 4, 1.0),
+                        color: primaryColor,
                       )),
-                  Text(
-                    "SPACE For Early Childhood Education",
-                    style: TextStyle(
-                      fontSize: 21,
-                      decorationThickness: 8,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromRGBO(255, 180, 4, 1.0),
-                    ),
-                  ),
                   SizedBox(
                     height: 5,
                   ),
@@ -135,7 +126,7 @@ class _signInState extends State<signIn> {
               ),
               //------------------------------------ Page Image------------------------------------
               const Image(
-                image: AssetImage("assets/icons/loginImg.png"),
+                image: AssetImage("assets/icons/login.png"),
                 height: 180,
                 width: 310,
                 fit: BoxFit.contain,
@@ -256,7 +247,7 @@ class _signInState extends State<signIn> {
                             builder: ((context) => const SignUpScreen()))),
                     child: const Text("Register",
                         style: TextStyle(
-                          color: Color.fromRGBO(255, 180, 4, 1.0),
+                          color:primaryColor,
                           fontWeight: FontWeight.w500,
                           fontSize: 15,
                         )),

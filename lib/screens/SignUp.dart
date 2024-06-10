@@ -1,8 +1,9 @@
 
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
-import 'package:assignment/screens/HomeScreen.dart';
+import 'package:assignment/components/colors.dart';
 import 'package:assignment/screens/signin.dart';
+import 'package:assignment/screens/task_screen.dart';
 import 'package:assignment/utils/progress_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,7 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Snackbars.success(context, 'Registered Successfully');
         Navigator.popUntil(context, (route) => route.isFirst);
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: ((context) => const HomeScreen())));
+            MaterialPageRoute(builder: ((context) => const  TaskScreen())));
       } else {
         hideProgressDialog(context);
         Snackbars.success(context, 'Registeration failed');
@@ -86,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color: primaryColor,
                     ),
                   ),
                   Text(
@@ -99,7 +100,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 10,
                   ),
                   Image(
-                    image: AssetImage("assets/icons/signupImage.png"),
+                    image: AssetImage("assets/icons/signup.png"),
                     height: 150,
                     width: 280,
                     fit: BoxFit.contain,
@@ -109,45 +110,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     key: _formKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(children: [
-                      Row(
-                        children: [
-                          Expanded(
-                              child: DefField(
-                            controller: _firstNameController,
-                            hint: "First Name",
-                            obsecure: false,
-                            lable: "First Name",
-                            inputtype: TextInputType.name,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter First name';
-                              } else if (!value
-                                  .contains(RegExp(r'^[a-zA-Z\- ]+$'))) {
-                                return 'Invalid First name';
-                              }
-                              return null;
-                            },
-                          )),
-                          Expanded(
-                            child: DefField(
-                              controller: _lastNameController,
-                              hint: "Last Name",
-                              obsecure: false,
-                              lable: "Last Name",
-                              inputtype: TextInputType.name,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter Last name';
-                                } else if (!value
-                                    .contains(RegExp(r'^[a-zA-Z\- ]+$'))) {
-                                  return 'Invalid Last name';
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                      DefField(
+                                              controller: _firstNameController,
+                                              hint: "Enter your Name",
+                                              obsecure: false,
+                                              lable: " Name",
+                                              inputtype: TextInputType.name,
+                                              validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter First name';
+                      } else if (!value
+                          .contains(RegExp(r'^[a-zA-Z\- ]+$'))) {
+                        return 'Invalid First name';
+                      }
+                      return null;
+                                              },
+                                            ),
                       const SizedBox(
                         height: 12,
                       ),
@@ -220,26 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 12,
                       ),
-                      DefField(
-                        controller: _mobileNumberController,
-                        hint: "Enter Your Number",
-                        obsecure: false,
-                        lable: "Phone number",
-                        inputtype: TextInputType.number,
-                        inputformatter: [
-                          LengthLimitingTextInputFormatter(10),
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your number!';
-                          }
-                          if (value.length < 10) {
-                            return 'Enter valid number';
-                          }
-                          return null;
-                        },
-                      ),
+                      
                     ])),
                 const SizedBox(
                   height: 15,
@@ -278,7 +237,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               builder: ((context) => const signIn()))),
                       child: const Text("Login",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: primaryColor,
                             fontWeight: FontWeight.w500,
                             fontSize: 16,
                           )),

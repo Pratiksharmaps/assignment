@@ -1,5 +1,7 @@
 
-import 'package:assignment/screens/HomeScreen.dart';
+import 'package:assignment/screens/signin.dart';
+import 'package:assignment/screens/task_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -24,7 +26,12 @@ class _splashScreenState extends State<SplashScreen> {
             child: AnimatedTextKit(
               onFinished: () {
                 Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) =>const  HomeScreen()));
+          context,
+          MaterialPageRoute(
+            builder: (context) => FirebaseAuth.instance.currentUser != null
+                ?  TaskScreen()
+                : const signIn(),
+          ));
               },
               animatedTexts: [
                 TypewriterAnimatedText(
@@ -37,7 +44,7 @@ class _splashScreenState extends State<SplashScreen> {
                       color: Colors.white),
                   speed: const Duration(milliseconds: 150),
                 ),
-                TypewriterAnimatedText('I Task Manager',
+                TypewriterAnimatedText('I am Task Manager',
                     textAlign: TextAlign.center,
                     curve: Curves.ease,
                     textStyle: const TextStyle(
@@ -48,7 +55,7 @@ class _splashScreenState extends State<SplashScreen> {
                     speed: const Duration(milliseconds: 110),
                     cursor: "!"),
                 TypewriterAnimatedText(
-                  'Lets Manage your Task!',
+                  "Let's Manage your Task!",
                   textAlign: TextAlign.center,
                   curve: Curves.ease,
                   textStyle: const TextStyle(

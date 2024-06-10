@@ -1,5 +1,6 @@
 import 'package:assignment/components/Button.dart';
 import 'package:assignment/components/DefField.dart';
+import 'package:assignment/components/colors.dart';
 import 'package:assignment/screens/signin.dart';
 import 'package:assignment/utils/alert_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
@@ -46,14 +47,14 @@ class _ResetScreenState extends State<ResetScreen> {
                 const Column(
                   children: [
                     SizedBox(
-                      width: 38,
+                      height: 38,
                     ),
                     Text(
                       "Reset Password",
                       style: TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(255, 180, 4, 1.0),
+                        color: primaryColor,
                       ),
                     ),
                     Text(
@@ -63,10 +64,10 @@ class _ResetScreenState extends State<ResetScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     Image(
-                      image: AssetImage("assets/icons/forget.png"),
+                      image: AssetImage("assets/icons/forgotimg.png"),
                       height: 180,
                       width: 310,
                       fit: BoxFit.contain,
