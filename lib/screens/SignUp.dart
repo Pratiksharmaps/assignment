@@ -8,8 +8,6 @@ import 'package:assignment/utils/progress_dialog.dart';
 import 'package:assignment/utils/snackbars.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
   @override
@@ -17,13 +15,11 @@ class SignUpScreen extends StatefulWidget {
 }
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final _NameController = TextEditingController();
   final _emailController = TextEditingController();
   bool _showPassword = true;
   final _passwordController = TextEditingController();
   final _confirmpasswordController = TextEditingController();
-  final _mobileNumberController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Future<void> _registerUrl() async {
     showProgressDialog(context, 'Creating account, please wait...');
@@ -111,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(children: [
                       DefField(
-                                              controller: _firstNameController,
+                                              controller: _NameController,
                                               hint: "Enter your Name",
                                               obsecure: false,
                                               lable: " Name",

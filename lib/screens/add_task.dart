@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:assignment/provider/task_provider.dart';
@@ -87,7 +88,8 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child: Text(DateFormat.yMd().add_jm().format(_deadline))),
+                        child:
+                            Text(DateFormat.yMd().add_jm().format(_deadline))),
                     Expanded(
                       child: IconButton(
                         alignment: Alignment.centerRight,
@@ -136,8 +138,11 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                           isComplete: widget.task?.isComplete ?? false,
                         );
                         if (widget.task == null) {
-                          await ref.read(taskServiceProvider).addTask(task, widget.userid);
-                          
+                        await  requestNotificationPermissions();
+                          await ref
+                              .read(taskServiceProvider)
+                              .addTask(task, widget.userid);
+
                           notificationService.scheduleNotification(
                             _deadline,
                             'Task Reminder',
@@ -155,5 +160,15 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
         ),
       ),
     );
+  }
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+ Future<void> requestNotificationPermissions() async {
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 }

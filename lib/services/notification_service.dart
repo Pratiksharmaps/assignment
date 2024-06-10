@@ -4,17 +4,11 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 
 class NotificationService {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
-  NotificationService() {
-    _initializeNotifications();
-  }
-
-  void _initializeNotifications() async {
+  static Future initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-
     const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
@@ -30,7 +24,6 @@ class NotificationService {
     final scheduledNotificationDateTime = scheduledTime.subtract(const Duration(minutes: 10));
 
     if (scheduledNotificationDateTime.isBefore(now)) {
-      print("Scheduled time is in the past");
       return;
     }
 

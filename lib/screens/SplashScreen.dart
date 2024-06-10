@@ -1,4 +1,5 @@
 
+import 'package:assignment/components/colors.dart';
 import 'package:assignment/screens/signin.dart';
 import 'package:assignment/screens/task_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,7 @@ class _splashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 94, 162, 240),
+      backgroundColor: primaryColor,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,7 +30,7 @@ class _splashScreenState extends State<SplashScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => FirebaseAuth.instance.currentUser != null
-                ?  TaskScreen()
+                ?  const TaskScreen()
                 : const signIn(),
           ));
               },
