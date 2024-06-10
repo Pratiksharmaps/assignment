@@ -24,7 +24,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _registerUrl() async {
     showProgressDialog(context, 'Creating account, please wait...');
     try {
-      // Register new User
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
               email: _emailController.text, password: _passwordController.text);

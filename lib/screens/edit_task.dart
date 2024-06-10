@@ -1,22 +1,21 @@
 import 'package:assignment/components/colors.dart';
+import 'package:assignment/provider/task_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:assignment/provider/task_provider.dart';
 import 'package:assignment/services/notification_service.dart';
 
-class AddTaskScreen extends ConsumerStatefulWidget {
-  final Task? task;
-  final String userid;
+class EditTaskScreen extends ConsumerStatefulWidget {
+  final Task task;
+  final String userId;
 
-  const AddTaskScreen(this.userid, {Key? key, this.task}) : super(key: key);
+  const EditTaskScreen(this.userId, this.task, {super.key});
 
   @override
-  _AddTaskScreenState createState() => _AddTaskScreenState();
+  _EditTaskScreenState createState() => _EditTaskScreenState();
 }
 
-class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
+class _EditTaskScreenState extends ConsumerState<EditTaskScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
   DateTime _deadline = DateTime.now();
@@ -26,12 +25,10 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.task != null) {
-      _titleController.text = widget.task!.title;
-      _descriptionController.text = widget.task!.description;
-      _deadline = widget.task!.deadline;
-      _durationController.text = widget.task!.duration.toString();
-    }
+    _titleController.text = widget.task.title;
+    _descriptionController.text = widget.task.description;
+    _deadline = widget.task.deadline;
+    _durationController.text = widget.task.duration.toString();
   }
 
   @override
@@ -39,9 +36,9 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
     final notificationService = ref.read(notificationServiceProvider);
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Edit Task'),
         backgroundColor: secondaryColor,
-        title: const Text('Add Task'),
-        titleTextStyle: const TextStyle(color: Colors.white, fontSize: 24),
+            titleTextStyle: const TextStyle(color: Colors.white,fontSize: 23),
         foregroundColor: Colors.white,
       ),
       body: Form(
@@ -92,8 +89,7 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 Row(
                   children: [
                     Expanded(
-                        child:
-                            Text(DateFormat.yMd().add_jm().format(_deadline))),
+                        child: Text(DateFormat.yMd().add_jm().format(_deadline))),
                     Expanded(
                       child: IconButton(
                         alignment: Alignment.centerRight,
@@ -130,48 +126,37 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
                 const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
                 Center(
                   child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: primaryColor,
-                        elevation: 5,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 13),
-                      ),
-                      child: const Text(
-                        'Add Task',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          final task = Task(
-                            id: widget.task?.id ?? '',
-                            title: _titleController.text,
-                            description: _descriptionController.text,
-                            deadline: _deadline,
-                            duration: int.parse(_durationController.text),
-                            isComplete: widget.task?.isComplete ?? false,
-                          );
-                          if (widget.task == null) {
-                            final isGranted =
-                                await _checkNotificationPermission();
-                            if (isGranted) {
-                              await ref
-                                  .read(taskServiceProvider)
-                                  .addTask(task, widget.userid);
+                    style: ElevatedButton.styleFrom(
+    foregroundColor: Colors.white, backgroundColor: primaryColor, 
+    elevation: 5,
+    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 13), 
+  ),
+                    child: const Text('Save Changes',style: TextStyle(color: Colors.white,fontSize: 15)),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        final updatedTask = Task(
+                          id: widget.task.id,
+                          title: _titleController.text,
+                          description: _descriptionController.text,
+                          deadline: _deadline,
+                          duration: int.parse(_durationController.text),
+                          isComplete: widget.task.isComplete,
+                        );
+                        await ref
+                            .read(taskServiceProvider)
+                            .updateTask(updatedTask, widget.userId);
 
-                              notificationService.scheduleNotification(
-                                _deadline,
-                                'Task Reminder',
-                                'Your task "${_titleController.text}" is due in 10 minutes',
-                              );
-                            } else {
-                              await _requestNotificationPermissions();
-                            }
-                          }
-                          Navigator.pop(context);
-                        }
+                        // Schedule notification for the updated task
+                        notificationService.scheduleNotification(
+                          _deadline,
+                          'Task Reminder',
+                          'Your task "${_titleController.text}" is due in 10 minutes',
+                        );
+
+                        Navigator.pop(context);
                       }
-                      ),
+                    },
+                  ),
                 ),
               ],
             ),
@@ -179,25 +164,5 @@ class _AddTaskScreenState extends ConsumerState<AddTaskScreen> {
         ),
       ),
     );
-  }
-
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  Future<bool> _checkNotificationPermission() async {
-    final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
-        flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>();
-    if (androidImplementation != null) {
-      return await androidImplementation.areNotificationsEnabled() ?? false;
-    }
-    return false;
-  }
-
-  Future<void> _requestNotificationPermissions() async {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
   }
 }

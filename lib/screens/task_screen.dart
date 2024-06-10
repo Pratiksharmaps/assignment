@@ -1,4 +1,5 @@
-import 'package:assignment/screens/task_detail_screen.dart';
+import 'package:assignment/components/colors.dart';
+import 'package:assignment/screens/edit_task.dart';
 import 'package:assignment/provider/auth_provider.dart';
 import 'package:assignment/provider/task_provider.dart';
 import 'package:assignment/screens/add_task.dart';
@@ -30,10 +31,13 @@ class TaskScreen extends ConsumerWidget {
         final taskList = ref.watch(taskListProvider(user.uid));
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: primaryColor,
+            automaticallyImplyLeading: false,
             title: const Text('Your Tasks'),
+            titleTextStyle: TextStyle(color: Colors.white,fontSize: 24),
             actions: [
               IconButton(
-                icon: const Icon(Icons.logout),
+                icon: const Icon(Icons.logout,color: Colors.white,),
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(
@@ -88,6 +92,7 @@ class TaskScreen extends ConsumerWidget {
                             },
                           ),
                           Checkbox(
+                            activeColor: secondaryColor,
                             value: task.isComplete,
                             onChanged: (value) {
                               task.isComplete = value!;
@@ -102,7 +107,7 @@ class TaskScreen extends ConsumerWidget {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                TaskDetailScreen(taskId: task.id),
+                                EditTaskScreen(user.uid,task),
                           ),
                         );
                       },
@@ -115,7 +120,8 @@ class TaskScreen extends ConsumerWidget {
             error: (e, _) => Center(child: Text('Error: $e')),
           ),
           floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
+            backgroundColor: secondaryColor,
+            child: const Icon(Icons.add,color: Colors.white,),
             onPressed: () {
               Navigator.push(
                 context,
