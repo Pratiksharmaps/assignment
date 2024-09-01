@@ -125,12 +125,17 @@ class _signInState extends State<signIn> {
                 height: 30,
               ),
               //------------------------------------ Page Image------------------------------------
-              const Image(
-                image: AssetImage("assets/icons/login.png"),
-                height: 180,
-                width: 310,
-                fit: BoxFit.contain,
-              ),
+               InteractiveViewer(
+                minScale: 0.2,
+                maxScale: 5.0,
+                 child: const Image(
+                  image: AssetImage("assets/icons/login.png"),
+                  height: 180,
+                  width: 310,
+                  fit: BoxFit.contain,
+                               ),
+               ),
+
               Center(
                 child: Column(
                   children: [
